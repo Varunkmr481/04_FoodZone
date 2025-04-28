@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import CardItem from "./CardItem";
 
 const ImageContainer = styled.div`
   width: 100%;
   /* height: 70vh; */
+  min-height: 70vh;
   background-image: url("./bg.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -45,38 +47,36 @@ const CardContainer = styled.div`
   }
 `;
 
-const CardItem = styled.div`
-  /* background-color: blue; */
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-  margin-top: 1.5rem;
-  border-radius: 1rem;
-  height: 30vh;
-  width: 90%;
-
-  @media (min-width: 425px) {
-    height: 35vh;
-  }
-
-  @media (min-width: 596px) {
-    width: unset;
-  }
-
-  @media (min-width: 1024px) {
-    height: 40vh;
-  }
-`;
-
 const CategoryMenu = () => {
+  const [foodData, setFoodData] = useState([]);
+
+  useEffect(function () {
+    fetch("http://localhost:8000")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setFoodData(data);
+      });
+  }, []);
+
   return (
     <ImageContainer>
       <CardContainer>
-        <CardItem></CardItem>
-        <CardItem></CardItem>
-        <CardItem></CardItem>
-        <CardItem></CardItem>
-        <CardItem></CardItem>
+        {/* <CardItem
+          name="Burger"
+          info="Lorem ipsum dolor sit amet consectetur. Odio elementum in neque cras
+            eget est."
+          price="10.00"
+        /> */}
+        {foodData.map((food, index) => (
+          <CardItem
+            key={`${food.name}-${index}`}
+            name={food.name}
+            info={food.text}
+            price={food.price}
+            image={food.image}
+          />
+        ))}
       </CardContainer>
     </ImageContainer>
   );
