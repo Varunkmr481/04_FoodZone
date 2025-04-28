@@ -76,11 +76,11 @@ const Header = styled.div`
 `;
 
 const FilterContainer = styled.div`
-  width: 80%;
+  width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 
   @media (min-width: 768px) {
     gap: 1rem;
