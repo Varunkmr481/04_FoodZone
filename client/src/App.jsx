@@ -21,6 +21,12 @@ const App = () => {
       });
   }, []);
 
+  function handleAll() {
+    fetch(`http://localhost:8000`)
+      .then((res) => res.json())
+      .then((data) => setFoodData(data));
+  }
+
   function handleBreakfast() {
     fetch(`http://localhost:8000/breakfast`)
       .then((res) => res.json())
@@ -42,11 +48,12 @@ const App = () => {
   return (
     <MainContainer>
       <Navbar
+        handleAll={handleAll}
         handleBreakfast={handleBreakfast}
         handleLunch={handleLunch}
         handleDinner={handleDinner}
       />
-      <CategoryMenu foodData={foodData} setFoodData={setFoodData} />
+      <CategoryMenu foodData={foodData} />
     </MainContainer>
   );
 };

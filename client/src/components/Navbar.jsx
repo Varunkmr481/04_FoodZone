@@ -109,7 +109,7 @@ const FilterButton = styled.button`
   }
 `;
 
-const Navbar = ({ handleBreakfast, handleLunch, handleDinner }) => {
+const Navbar = ({ handleAll, handleBreakfast, handleLunch, handleDinner }) => {
   return (
     <TopContainer>
       <InnerContainer>
@@ -120,7 +120,13 @@ const Navbar = ({ handleBreakfast, handleLunch, handleDinner }) => {
       </InnerContainer>
 
       <FilterContainer>
-        <FilterButton>All</FilterButton>
+        <FilterButton
+          onClick={() => {
+            handleAll();
+          }}
+        >
+          All
+        </FilterButton>
         <FilterButton
           onClick={() => {
             handleBreakfast();
@@ -147,4 +153,4 @@ const Navbar = ({ handleBreakfast, handleLunch, handleDinner }) => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);
