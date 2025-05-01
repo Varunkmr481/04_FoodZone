@@ -88,11 +88,16 @@ const FilterContainer = styled.div`
 `;
 
 const FilterButton = styled.button`
+  cursor: pointer;
   box-sizing: border-box;
   padding: 0.2rem 0.4rem;
   border-radius: 0.3rem;
   background-color: orange;
   color: white;
+
+  &:hover {
+    background-color: rgb(168, 67, 23);
+  }
 
   @media (min-width: 375px) {
     padding: 0.4rem 0.6rem;
@@ -104,7 +109,7 @@ const FilterButton = styled.button`
   }
 `;
 
-const Navbar = () => {
+const Navbar = ({ handleBreakfast, handleLunch, handleDinner }) => {
   return (
     <TopContainer>
       <InnerContainer>
@@ -116,9 +121,27 @@ const Navbar = () => {
 
       <FilterContainer>
         <FilterButton>All</FilterButton>
-        <FilterButton>Breakfast</FilterButton>
-        <FilterButton>Lunch</FilterButton>
-        <FilterButton>Dinner</FilterButton>
+        <FilterButton
+          onClick={() => {
+            handleBreakfast();
+          }}
+        >
+          Breakfast
+        </FilterButton>
+        <FilterButton
+          onClick={() => {
+            handleLunch();
+          }}
+        >
+          Lunch
+        </FilterButton>
+        <FilterButton
+          onClick={() => {
+            handleDinner();
+          }}
+        >
+          Dinner
+        </FilterButton>
       </FilterContainer>
     </TopContainer>
   );

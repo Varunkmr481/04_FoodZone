@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import CardItem from "./CardItem";
 
@@ -47,27 +47,10 @@ const CardContainer = styled.div`
   }
 `;
 
-const CategoryMenu = () => {
-  const [foodData, setFoodData] = useState([]);
-
-  useEffect(function () {
-    fetch("http://localhost:8000")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setFoodData(data);
-      });
-  }, []);
-
+const CategoryMenu = ({ foodData }) => {
   return (
     <ImageContainer>
       <CardContainer>
-        {/* <CardItem
-          name="Burger"
-          info="Lorem ipsum dolor sit amet consectetur. Odio elementum in neque cras
-            eget est."
-          price="10.00"
-        /> */}
         {foodData.map((food, index) => (
           <CardItem
             key={`${food.name}-${index}`}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import styled from "styled-components";
 import Navbar from "./components/Navbar";
@@ -10,10 +10,43 @@ const MainContainer = styled.div`
 `;
 
 const App = () => {
+  const [foodData, setFoodData] = useState([]);
+
+  useEffect(function () {
+    fetch("http://localhost:8000")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setFoodData(data);
+      });
+  }, []);
+
+  function handleBreakfast() {
+    fetch(`http://localhost:8000/breakfast`)
+      .then((res) => res.json())
+      .then((data) => setFoodData(data));
+  }
+
+  function handleLunch() {
+    fetch(`http://localhost:8000/lunch`)
+      .then((res) => res.json())
+      .then((data) => setFoodData(data));
+  }
+
+  function handleDinner() {
+    fetch(`http://localhost:8000/dinner`)
+      .then((res) => res.json())
+      .then((data) => setFoodData(data));
+  }
+
   return (
     <MainContainer>
-      <Navbar />
-      <CategoryMenu />
+      <Navbar
+        handleBreakfast={handleBreakfast}
+        handleLunch={handleLunch}
+        handleDinner={handleDinner}
+      />
+      <CategoryMenu foodData={foodData} setFoodData={setFoodData} />
     </MainContainer>
   );
 };

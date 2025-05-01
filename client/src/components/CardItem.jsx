@@ -121,10 +121,14 @@ const CardItemInfo = styled.div`
 `;
 
 const CardItem = ({ name, info, price, image }) => {
+  // image : "/images/ramen.png",
+  const imageUrl = `http://localhost:8000${image}`;
+  console.log(imageUrl);
+
   return (
     <CardItemContainer>
       <div>
-        <img src={image} alt={name}></img>
+        <img src={imageUrl} alt={name}></img>
       </div>
 
       <CardItemInfo>
