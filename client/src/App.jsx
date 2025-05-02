@@ -52,6 +52,7 @@ const App = () => {
         handleBreakfast={handleBreakfast}
         handleLunch={handleLunch}
         handleDinner={handleDinner}
+        setFoodData={setFoodData}
       />
       <CategoryMenu foodData={foodData} />
     </MainContainer>

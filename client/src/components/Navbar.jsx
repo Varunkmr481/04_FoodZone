@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const TopContainer = styled.div`
@@ -37,6 +37,7 @@ const InnerContainer = styled.div`
     padding: 0.3rem 0.3rem;
     border-radius: 0.2rem;
     background-color: transparent;
+    color: white;
   }
 
   @media (min-width: 375px) {
@@ -109,13 +110,52 @@ const FilterButton = styled.button`
   }
 `;
 
-const Navbar = ({ handleAll, handleBreakfast, handleLunch, handleDinner }) => {
+const Navbar = ({
+  handleAll,
+  handleBreakfast,
+  handleLunch,
+  handleDinner,
+  setFoodData,
+}) => {
+  const [userTyping, setUserTyping] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    fetch("http://localhost:8000", { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        if (userTyping === "") return data;
+
+        return data.filter((item) => {
+          console.log(item.name.toLowerCase().includes(userTyping));
+          return item.name.toLowerCase().includes(userTyping.toLowerCase());
+        });
+      })
+      .then((data) => {
+        setFoodData(data);
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [setFoodData, userTyping]);
+
   return (
     <TopContainer>
       <InnerContainer>
         <Header>FoodZone</Header>
         <div className="search">
-          <input type="text" placeholder="Search foods..." />
+          <input
+            type="text"
+            placeholder="Search foods..."
+            value={userTyping}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setUserTyping(e.target.value);
+            }}
+          />
         </div>
       </InnerContainer>
 

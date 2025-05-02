@@ -48,11 +48,11 @@ const CardItemContainer = styled.div`
   }
 
   @media (min-width: 768px) {
-    height: 35vh;
+    height: 40vh;
   }
 
   @media (min-width: 1024px) {
-    height: 30vh;
+    height: 35vh;
   }
 `;
 
@@ -73,6 +73,11 @@ const CardButton = styled.button`
   @media (min-width: 1024px) {
     padding: 0.4rem 0.6rem;
     font-size: 1rem;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 0.5rem 0.7rem;
+    font-size: 1.2rem;
   }
 `;
 
@@ -116,6 +121,16 @@ const CardItemInfo = styled.div`
 
     p {
       font-size: 0.8rem;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
     }
   }
 `;
