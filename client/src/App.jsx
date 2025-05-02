@@ -21,26 +21,20 @@ const App = () => {
       });
   }, []);
 
-  function handleAll() {
-    fetch(`http://localhost:8000`)
-      .then((res) => res.json())
-      .then((data) => setFoodData(data));
+  function fetchFilteredData(type) {
+    if (type === "all") {
+      return fetch(`http://localhost:8000`);
+    } else if (type === "breakfast") {
+      return fetch(`http://localhost:8000/breakfast`);
+    } else if (type === "lunch") {
+      return fetch(`http://localhost:8000/lunch`);
+    } else if (type === "dinner") {
+      return fetch(`http://localhost:8000/dinner`);
+    }
   }
 
-  function handleBreakfast() {
-    fetch(`http://localhost:8000/breakfast`)
-      .then((res) => res.json())
-      .then((data) => setFoodData(data));
-  }
-
-  function handleLunch() {
-    fetch(`http://localhost:8000/lunch`)
-      .then((res) => res.json())
-      .then((data) => setFoodData(data));
-  }
-
-  function handleDinner() {
-    fetch(`http://localhost:8000/dinner`)
+  function handleFilteredData(type) {
+    fetchFilteredData(type)
       .then((res) => res.json())
       .then((data) => setFoodData(data));
   }
@@ -48,10 +42,7 @@ const App = () => {
   return (
     <MainContainer>
       <Navbar
-        handleAll={handleAll}
-        handleBreakfast={handleBreakfast}
-        handleLunch={handleLunch}
-        handleDinner={handleDinner}
+        handleFilteredData={handleFilteredData}
         setFoodData={setFoodData}
       />
       <CategoryMenu foodData={foodData} />

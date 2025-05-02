@@ -93,8 +93,10 @@ const FilterButton = styled.button`
   box-sizing: border-box;
   padding: 0.2rem 0.4rem;
   border-radius: 0.3rem;
-  background-color: orange;
+  background-color: "#f57c00";
   color: white;
+  background-color: ${({ curr, index }) =>
+    curr === index ? "#d32f2f" : "#f57c00"};
 
   &:hover {
     background-color: rgb(168, 67, 23);
@@ -110,16 +112,19 @@ const FilterButton = styled.button`
   }
 `;
 
-const Navbar = ({
-  handleAll,
-  handleBreakfast,
-  handleLunch,
-  handleDinner,
-  setFoodData,
-}) => {
+const filterButtons = [
+  { name: "all", type: "all" },
+  { name: "breakfast", type: "breakfast" },
+  { name: "lunch", type: "lunch" },
+  { name: "dinner", type: "dinner" },
+];
+
+const Navbar = ({ handleFilteredData, setFoodData }) => {
   const [userTyping, setUserTyping] = useState("");
+  const [curr, setCurr] = useState(null);
 
   useEffect(() => {
+    if (userTyping !== "") setCurr(null);
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -160,34 +165,19 @@ const Navbar = ({
       </InnerContainer>
 
       <FilterContainer>
-        <FilterButton
-          onClick={() => {
-            handleAll();
-          }}
-        >
-          All
-        </FilterButton>
-        <FilterButton
-          onClick={() => {
-            handleBreakfast();
-          }}
-        >
-          Breakfast
-        </FilterButton>
-        <FilterButton
-          onClick={() => {
-            handleLunch();
-          }}
-        >
-          Lunch
-        </FilterButton>
-        <FilterButton
-          onClick={() => {
-            handleDinner();
-          }}
-        >
-          Dinner
-        </FilterButton>
+        {filterButtons.map((el, index) => (
+          <FilterButton
+            key={el.name}
+            curr={curr}
+            index={index}
+            onClick={() => {
+              handleFilteredData(el.type);
+              setCurr(index);
+            }}
+          >
+            {el.name.toUpperCase()}
+          </FilterButton>
+        ))}
       </FilterContainer>
     </TopContainer>
   );
